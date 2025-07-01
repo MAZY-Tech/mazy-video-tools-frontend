@@ -1,12 +1,14 @@
 import { useSession, signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 export default function VideosPage() {
   const { data: session, status } = useSession();
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [backendUrl, setBackendUrl] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     if (status !== "authenticated") return;
@@ -157,11 +159,13 @@ export default function VideosPage() {
                     backgroundColor: "white",
                     boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
                     transition: "transform 0.2s, box-shadow 0.2s",
+                    cursor: "pointer",
                     ":hover": {
                       transform: "translateY(-5px)",
                       boxShadow: "0 5px 15px rgba(0,0,0,0.1)"
                     }
                   }}
+                  onClick={() => router.push(`/video/${video.id}`)}
                 >
                   <h3 style={{ 
                     color: "#333", 
