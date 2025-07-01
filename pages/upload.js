@@ -30,7 +30,14 @@ export default function UploadPage() {
     })();
   }, []);
 
-  // Lê o arquivo e calcula a duração em segundos
+  const generateFileHash = async (file) => {
+    const buffer = await file.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest("SHA-256", buffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+    return hashHex;
+  }
+  
   const handleFile = (e) => {
     const f = e.target.files?.[0];
     if (!f) return;
@@ -56,13 +63,23 @@ export default function UploadPage() {
 
       const durationSeconds = duration;
 
+      const videoHash = await generateFileHash(file);
+
+      const userId = JSON.parse(atob(session.accessToken.split(".")[1])).sub;
+
       const presignRes = await fetch(`${apiBase}/presign-upload`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${session.accessToken}`,
         },
-        body: JSON.stringify({ filename: name, sizeBytes: size, durationSeconds }),
+        body: JSON.stringify({
+          filename: name,
+          sizeBytes: size,
+          durationSeconds,
+          "Content-Type": file.type,
+          "x-amz-meta-video_hash": videoHash,
+        }),
       });
       const presignData = await presignRes.json();
       if (!presignRes.ok) {
@@ -74,7 +91,11 @@ export default function UploadPage() {
       const uploadRes = await fetch(uploadUrl, {
         method: "PUT",
         body: file,
-        headers: { "Content-Type": file.type },
+        headers: {
+          "Content-Type": file.type,
+          "x-amz-meta-video_hash": videoHash,
+          "x-amz-meta-cognito_user_id": userId,
+        },
       });
       if (!uploadRes.ok) {
         throw new Error("Falha ao enviar o arquivo para o S3");
