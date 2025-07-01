@@ -1,6 +1,7 @@
 import { useSession, signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function UploadPage() {
   const { data: session, status } = useSession();
@@ -86,13 +87,14 @@ export default function UploadPage() {
         throw new Error(presignData.error || "Erro ao obter URL de upload");
       }
 
-      const { uploadUrl } = presignData;
+      const { uploadUrl, video_id } = presignData;
 
       const uploadRes = await fetch(uploadUrl, {
         method: "PUT",
         body: file,
         headers: {
           "Content-Type": file.type,
+          "x-amz-meta-video_id" : video_id,
           "x-amz-meta-video_hash": videoHash,
           "x-amz-meta-cognito_user_id": userId,
         },
@@ -104,6 +106,8 @@ export default function UploadPage() {
       alert("Upload successful!");
       setFile(null);
       setDuration(0);
+
+      redirect(`video/${video_id}`);
     } catch (err) {
       console.error("Upload error:", err);
       alert(err.message);
