@@ -29,7 +29,7 @@ export default function VideosPage() {
         }
 
         const videosData = await videosResp.json();
-        setVideos(videosData);
+        setVideos(videosData.videos);
       } catch (error) {
         console.error("Error fetching videos:", error);
       } finally {
@@ -37,6 +37,10 @@ export default function VideosPage() {
       }
     })();
   }, [status, session]);
+
+  useEffect(() => {
+    console.log(videos)
+  },[videos])
 
   if (status === "loading") return (
     <div style={{ 
@@ -144,70 +148,120 @@ export default function VideosPage() {
             </div>
 
             <div style={{ 
-              display: "grid", 
-              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", 
-              gap: "1.5rem" 
+              overflowX: "auto",
+              backgroundColor: "white",
+              borderRadius: "8px",
+              boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
+              border: "1px solid #eaeaea"
             }}>
-              {videos.map((video) => (
-                <div 
-                  key={video.video_id}
-                  style={{ 
-                    border: "1px solid #eaeaea", 
-                    borderRadius: "8px", 
-                    padding: "1.5rem",
-                    backgroundColor: "white",
-                    boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
-                    transition: "transform 0.2s, box-shadow 0.2s",
-                    cursor: "pointer",
-                    ":hover": {
-                      transform: "translateY(-5px)",
-                      boxShadow: "0 5px 15px rgba(0,0,0,0.1)"
-                    }
-                  }}
-                  onClick={() => router.push(`/video/${video.video_id}`)}
-                >
-                  <h3 style={{ 
-                    color: "#333", 
-                    marginTop: 0,
-                    marginBottom: "1rem",
-                    fontSize: "1.2rem",
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    whiteSpace: "nowrap"
+              <table style={{ 
+                width: "100%", 
+                borderCollapse: "collapse",
+                textAlign: "left"
+              }}>
+                <thead>
+                  <tr style={{
+                    backgroundColor: "#f9f9f9",
+                    borderBottom: "2px solid #eaeaea"
                   }}>
-                    {video.download_url}
-                  </h3>
-
-                  {video.download_url && (
-                    <div style={{ marginBottom: "1rem" }}>
-                      <video 
-                        controls 
-                        style={{ 
+                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Video ID</th>
+                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Status</th>
+                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Progress</th>
+                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Download URL</th>
+                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {videos.map((video) => (
+                    <tr 
+                      key={video.video_id}
+                      style={{ 
+                        borderBottom: "1px solid #eaeaea",
+                        transition: "background-color 0.2s",
+                        cursor: "pointer",
+                        ":hover": {
+                          backgroundColor: "#f9f9f9"
+                        }
+                      }}
+                    >
+                      <td style={{ 
+                        padding: "1rem", 
+                        color: "#666",
+                        maxWidth: "200px",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                      }}>
+                        {video.video_id}
+                      </td>
+                      <td style={{ 
+                        padding: "1rem", 
+                        color: video.status === "COMPLETED" ? "#34A853" : "#FBBC05",
+                        fontWeight: "500"
+                      }}>
+                        {video.status}
+                      </td>
+                      <td style={{ padding: "1rem", color: "#666" }}>
+                        <div style={{ 
                           width: "100%", 
-                          maxHeight: "200px",
+                          backgroundColor: "#f1f1f1", 
                           borderRadius: "4px",
-                          backgroundColor: "#000"
-                        }}
-                        src={video.download_url}
-                      />
-                    </div>
-                  )}
-
-                  <div style={{ 
-                    display: "flex", 
-                    justifyContent: "space-between",
-                    color: "#666",
-                    fontSize: "0.9rem"
-                  }}>
-                    <p style={{ margin: 0 }}>
-                      <strong>Duration:</strong> {video.durationSeconds}s
-                    </p>
-                    <p style={{ margin: 0 }}>
-                      <strong>Uploaded:</strong> {new Date(video.createdAt).toLocaleDateString()}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                          overflow: "hidden"
+                        }}>
+                          <div style={{ 
+                            height: "8px", 
+                            width: `${video.progress}%`, 
+                            backgroundColor: video.status === "COMPLETED" ? "#34A853" : "#FBBC05",
+                            borderRadius: "4px"
+                          }}></div>
+                        </div>
+                        <span style={{ fontSize: "0.8rem", marginTop: "0.25rem", display: "inline-block" }}>
+                          {video.progress}%
+                        </span>
+                      </td>
+                      <td style={{ 
+                        padding: "1rem", 
+                        color: "#666",
+                        maxWidth: "300px",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap"
+                      }}>
+                        {video.download_url ? (
+                          <a 
+                            href={video.download_url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            style={{ color: "#4285F4", textDecoration: "none" }}
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            {video.download_url}
+                          </a>
+                        ) : (
+                          "Not available"
+                        )}
+                      </td>
+                      <td style={{ padding: "1rem" }}>
+                        <button 
+                          style={{ 
+                            padding: "0.5rem 1rem",
+                            backgroundColor: "#4285F4",
+                            color: "white",
+                            border: "none",
+                            borderRadius: "4px",
+                            cursor: "pointer",
+                            fontWeight: "500",
+                            transition: "background-color 0.2s"
+                          }}
+                          onClick={() => router.push(`/video/${video.video_id}`)}
+                        >
+                          View Details
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         )}
