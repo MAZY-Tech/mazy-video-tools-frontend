@@ -205,8 +205,8 @@ export default function VideoDetailPage() {
                 gap: "1rem",
                 marginBottom: "1.5rem"
               }}>
-                <div style={{ fontWeight: "bold", color: "#333" }}>Video ID:</div>
-                <div style={{ color: "#666", wordBreak: "break-all" }}>{video.video_id}</div>
+                <div style={{ fontWeight: "bold", color: "#333" }}>File name:</div>
+                <div style={{ color: "#666", wordBreak: "break-all" }}>{video.file_name}</div>
 
                 <div style={{ fontWeight: "bold", color: "#333" }}>Status:</div>
                 <div style={{ color: "#666" }}>{video.status}</div>
@@ -217,9 +217,9 @@ export default function VideoDetailPage() {
                 <div style={{ fontWeight: "bold", color: "#333" }}>Download URL:</div>
                 <div style={{ color: "#666", wordBreak: "break-all" }}>
                   {video.download_url ? (
-                    <a 
-                      href={video.download_url} 
-                      target="_blank" 
+                    <a
+                      href={video.download_url}
+                      target="_blank"
                       rel="noopener noreferrer"
                       style={{ color: "#4285F4", textDecoration: "none" }}
                     >
@@ -230,27 +230,6 @@ export default function VideoDetailPage() {
                   )}
                 </div>
               </div>
-
-              {video.download_url && (
-                <div style={{ marginTop: "1.5rem", textAlign: "center" }}>
-                  <a 
-                    href={video.download_url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    style={{
-                      padding: "0.75rem 1.5rem",
-                      backgroundColor: "#4285F4",
-                      color: "white",
-                      textDecoration: "none",
-                      borderRadius: "4px",
-                      fontWeight: "bold",
-                      display: "inline-block"
-                    }}
-                  >
-                    Download Video
-                  </a>
-                </div>
-              )}
             </div>
           </div>
         ) : (
@@ -268,7 +247,7 @@ export default function VideoDetailPage() {
             <Link href="/videos" legacyBehavior>
               <a style={{ 
                 padding: "0.75rem 1.5rem",
-                backgroundColor: "#4285F4",
+                backgroundColor: "#666666",
                 color: "white",
                 textDecoration: "none",
                 borderRadius: "4px",

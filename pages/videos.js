@@ -38,10 +38,6 @@ export default function VideosPage() {
     })();
   }, [status, session]);
 
-  useEffect(() => {
-    console.log(videos)
-  },[videos])
-
   if (status === "loading") return (
     <div style={{ 
       padding: "2rem", 
@@ -143,11 +139,10 @@ export default function VideosPage() {
                     backgroundColor: "#f9f9f9",
                     borderBottom: "2px solid #eaeaea"
                   }}>
-                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Video ID</th>
+                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Name</th>
                     <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Status</th>
                     <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Progress</th>
                     <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Download URL</th>
-                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -171,7 +166,7 @@ export default function VideosPage() {
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap"
                       }}>
-                        {video.video_id}
+                        {video.file_name}
                       </td>
                       <td style={{ 
                         padding: "1rem", 
@@ -219,13 +214,6 @@ export default function VideosPage() {
                         ) : (
                           "Not available"
                         )}
-                      </td>
-                      <td style={{ padding: "1rem" }}>
-                        <Link href={`/video/${video.video_id}`} legacyBehavior>
-                          <a className="nav-link">
-                            View Details
-                          </a>
-                        </Link>
                       </td>
                     </tr>
                   ))}
