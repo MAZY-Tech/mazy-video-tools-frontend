@@ -116,38 +116,17 @@ export default function VideoDetailPage() {
         <h1 style={{ color: "#333", margin: 0 }}>Video Details</h1>
         <nav style={{ display: "flex", gap: "1rem" }}>
           <Link href="/" legacyBehavior>
-            <a style={{ 
-              padding: "0.5rem 1rem",
-              backgroundColor: "#4285F4",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontWeight: "bold"
-            }}>
+            <a className="nav-link">
               Home
             </a>
           </Link>
           <Link href="/videos" legacyBehavior>
-            <a style={{ 
-              padding: "0.5rem 1rem",
-              backgroundColor: "#34A853",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontWeight: "bold"
-            }}>
+            <a className="nav-link">
               View My Videos
             </a>
           </Link>
           <Link href="/upload" legacyBehavior>
-            <a style={{ 
-              padding: "0.5rem 1rem",
-              backgroundColor: "#FBBC05",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontWeight: "bold"
-            }}>
+            <a className="nav-link">
               Upload New Video
             </a>
           </Link>
@@ -186,14 +165,7 @@ export default function VideoDetailPage() {
               {error}
             </p>
             <Link href="/videos" legacyBehavior>
-              <a style={{ 
-                padding: "0.75rem 1.5rem",
-                backgroundColor: "#4285F4",
-                color: "white",
-                textDecoration: "none",
-                borderRadius: "4px",
-                fontWeight: "bold"
-              }}>
+              <a className="nav-link">
                 Back to Videos
               </a>
             </Link>
@@ -265,7 +237,7 @@ export default function VideoDetailPage() {
                     href={video.download_url} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    style={{ 
+                    style={{
                       padding: "0.75rem 1.5rem",
                       backgroundColor: "#4285F4",
                       color: "white",

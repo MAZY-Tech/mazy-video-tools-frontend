@@ -54,7 +54,7 @@ export default function VideosPage() {
     </div>
   );
 
-  if (!session) return <button onClick={() => signIn("cognito")}>Sign in</button>;
+  if (!session) return <a onClick={() => signIn("cognito")} className="nav-link" style={{ cursor: "pointer" }}>Sign in</a>;
 
   return (
     <div style={{ 
@@ -73,26 +73,12 @@ export default function VideosPage() {
         <h1 style={{ color: "#333", margin: 0 }}>My Videos</h1>
         <nav style={{ display: "flex", gap: "1rem" }}>
           <Link href="/" legacyBehavior>
-            <a style={{ 
-              padding: "0.5rem 1rem",
-              backgroundColor: "#4285F4",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontWeight: "bold"
-            }}>
+            <a className="nav-link">
               Home
             </a>
           </Link>
           <Link href="/upload" legacyBehavior>
-            <a style={{ 
-              padding: "0.5rem 1rem",
-              backgroundColor: "#FBBC05",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontWeight: "bold"
-            }}>
+            <a className="nav-link">
               Upload New Video
             </a>
           </Link>
@@ -126,14 +112,7 @@ export default function VideosPage() {
               You haven't uploaded any videos yet.
             </p>
             <Link href="/upload" legacyBehavior>
-              <a style={{ 
-                padding: "0.75rem 1.5rem",
-                backgroundColor: "#4285F4",
-                color: "white",
-                textDecoration: "none",
-                borderRadius: "4px",
-                fontWeight: "bold"
-              }}>
+              <a className="nav-link">
                 Upload Your First Video
               </a>
             </Link>
@@ -242,21 +221,11 @@ export default function VideosPage() {
                         )}
                       </td>
                       <td style={{ padding: "1rem" }}>
-                        <button 
-                          style={{ 
-                            padding: "0.5rem 1rem",
-                            backgroundColor: "#4285F4",
-                            color: "white",
-                            border: "none",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            fontWeight: "500",
-                            transition: "background-color 0.2s"
-                          }}
-                          onClick={() => router.push(`/video/${video.video_id}`)}
-                        >
-                          View Details
-                        </button>
+                        <Link href={`/video/${video.video_id}`} legacyBehavior>
+                          <a className="nav-link">
+                            View Details
+                          </a>
+                        </Link>
                       </td>
                     </tr>
                   ))}

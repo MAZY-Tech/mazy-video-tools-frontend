@@ -27,20 +27,15 @@ export default function Home() {
         height: "100vh" 
       }}>
         <h1 style={{ marginBottom: "2rem", color: "#333" }}>Mazy Video Tools</h1>
-        <button 
+        <a 
           onClick={() => signIn("cognito")} 
+          className="nav-link"
           style={{
-            padding: "0.75rem 1.5rem",
-            backgroundColor: "#4285F4",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            fontSize: "1rem",
             cursor: "pointer"
           }}
         >
           Sign in
-        </button>
+        </a>
       </div>
     );
   }
@@ -62,7 +57,7 @@ export default function Home() {
         <h1 style={{ color: "#333", margin: 0 }}>Mazy Video Tools</h1>
         <div>
           <span style={{ marginRight: "1rem" }}>Signed in as {session.user.email}</span>
-          <button 
+          <button
             onClick={() => signOut()}
             style={{
               padding: "0.5rem 1rem",
@@ -92,26 +87,12 @@ export default function Home() {
             gap: "1rem" 
           }}>
             <Link href="/upload" legacyBehavior>
-              <a style={{ 
-                padding: "1rem 2rem",
-                backgroundColor: "#4285F4",
-                color: "white",
-                textDecoration: "none",
-                borderRadius: "4px",
-                fontWeight: "bold"
-              }}>
+              <a className="nav-link">
                 Upload Video
               </a>
             </Link>
             <Link href="/videos" legacyBehavior>
-              <a style={{ 
-                padding: "1rem 2rem",
-                backgroundColor: "#34A853",
-                color: "white",
-                textDecoration: "none",
-                borderRadius: "4px",
-                fontWeight: "bold"
-              }}>
+              <a className="nav-link">
                 View My Videos
               </a>
             </Link>

@@ -23,7 +23,7 @@ export default function UploadPage() {
     </div>
   );
 
-  if (!session) return <button onClick={() => signIn("cognito")}>Sign in</button>;
+  if (!session) return <a onClick={() => signIn("cognito")} className="nav-link" style={{ cursor: "pointer" }}>Sign in</a>;
 
   useEffect(() => {
     (async () => {
@@ -138,26 +138,12 @@ export default function UploadPage() {
         <h1 style={{ color: "#333", margin: 0 }}>Upload Video</h1>
         <nav style={{ display: "flex", gap: "1rem" }}>
           <Link href="/" legacyBehavior>
-            <a style={{ 
-              padding: "0.5rem 1rem",
-              backgroundColor: "#4285F4",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontWeight: "bold"
-            }}>
+            <a className="nav-link">
               Home
             </a>
           </Link>
           <Link href="/videos" legacyBehavior>
-            <a style={{ 
-              padding: "0.5rem 1rem",
-              backgroundColor: "#34A853",
-              color: "white",
-              textDecoration: "none",
-              borderRadius: "4px",
-              fontWeight: "bold"
-            }}>
+            <a className="nav-link">
               View My Videos
             </a>
           </Link>
