@@ -7,7 +7,6 @@ export default function VideosPage() {
   const { data: session, status } = useSession();
   const [videos, setVideos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [backendUrl, setBackendUrl] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -151,7 +150,7 @@ export default function VideosPage() {
             }}>
               {videos.map((video) => (
                 <div 
-                  key={video.id} 
+                  key={video.video_id}
                   style={{ 
                     border: "1px solid #eaeaea", 
                     borderRadius: "8px", 
@@ -165,7 +164,7 @@ export default function VideosPage() {
                       boxShadow: "0 5px 15px rgba(0,0,0,0.1)"
                     }
                   }}
-                  onClick={() => router.push(`/video/${video.id}`)}
+                  onClick={() => router.push(`/video/${video.video_id}`)}
                 >
                   <h3 style={{ 
                     color: "#333", 
@@ -176,10 +175,10 @@ export default function VideosPage() {
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap"
                   }}>
-                    {video.filename}
+                    {video.download_url}
                   </h3>
 
-                  {video.url && (
+                  {video.download_url && (
                     <div style={{ marginBottom: "1rem" }}>
                       <video 
                         controls 
@@ -189,7 +188,7 @@ export default function VideosPage() {
                           borderRadius: "4px",
                           backgroundColor: "#000"
                         }}
-                        src={video.url}
+                        src={video.download_url}
                       />
                     </div>
                   )}

@@ -1,5 +1,5 @@
 import { useSession, signIn } from "next-auth/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -11,36 +11,79 @@ export default function VideoDetailPage() {
   const [backendUrl, setBackendUrl] = useState(null);
   const router = useRouter();
   const { video_id } = router.query;
+  const intervalRef = useRef(null);
 
+  // Function to fetch video data
+  const fetchVideoData = useCallback(async () => {
+    if (status !== "authenticated" || !video_id) return;
+
+    try {
+      // Only fetch config if we don't have backendUrl yet
+      if (!backendUrl) {
+        const resp = await fetch("/api/config");
+        const config = await resp.json();
+        setBackendUrl(config.backendUrl);
+      }
+
+      const apiBase = `${backendUrl ? backendUrl.replace(/\/$/, "") : ""}/api`;
+
+      const videoResp = await fetch(`${apiBase}/video/${video_id}`, {
+        headers: {
+          Authorization: `Bearer ${session.accessToken}`,
+        },
+      });
+
+      if (!videoResp.ok) {
+        throw new Error("Failed to fetch video information");
+      }
+
+      const videoData = await videoResp.json();
+      setVideo(videoData);
+    } catch (error) {
+      console.error("Error fetching video:", error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [status, session, video_id, backendUrl]);
+
+  // Initial fetch when component mounts
+  useEffect(() => {
+    if (status !== "authenticated" || !video_id) return;
+    fetchVideoData();
+  }, [status, video_id, fetchVideoData]);
+
+  // Set up polling every 5 seconds
   useEffect(() => {
     if (status !== "authenticated" || !video_id) return;
 
-    (async () => {
-      try {
-        const resp = await fetch("/api/config");
-        const { backendUrl } = await resp.json();
-        const apiBase = `${backendUrl.replace(/\/$/, "")}/api`;
-
-        const videoResp = await fetch(`${apiBase}/videos/${video_id}`, {
-          headers: {
-            Authorization: `Bearer ${session.accessToken}`,
-          },
-        });
-
-        if (!videoResp.ok) {
-          throw new Error("Failed to fetch video information");
-        }
-
-        const videoData = await videoResp.json();
-        setVideo(videoData);
-      } catch (error) {
-        console.error("Error fetching video:", error);
-        setError(error.message);
-      } finally {
-        setLoading(false);
+    // If video status is COMPLETED, don't set up polling
+    if (video && video.status === "COMPLETED") {
+      // Clear any existing interval
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
-    })();
-  }, [status, session, video_id]);
+      return;
+    }
+
+    // Clear any existing interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    // Set up new interval
+    intervalRef.current = setInterval(() => {
+      fetchVideoData();
+    }, 5000); // 5 seconds
+
+    // Clean up interval when component unmounts
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [status, video_id, fetchVideoData, video]);
 
   if (status === "loading") return (
     <div style={{ 
@@ -192,13 +235,13 @@ export default function VideoDetailPage() {
               }}>
                 <div style={{ fontWeight: "bold", color: "#333" }}>Video ID:</div>
                 <div style={{ color: "#666", wordBreak: "break-all" }}>{video.video_id}</div>
-                
+
                 <div style={{ fontWeight: "bold", color: "#333" }}>Status:</div>
                 <div style={{ color: "#666" }}>{video.status}</div>
-                
+
                 <div style={{ fontWeight: "bold", color: "#333" }}>Progress:</div>
                 <div style={{ color: "#666" }}>{video.progress}%</div>
-                
+
                 <div style={{ fontWeight: "bold", color: "#333" }}>Download URL:</div>
                 <div style={{ color: "#666", wordBreak: "break-all" }}>
                   {video.download_url ? (

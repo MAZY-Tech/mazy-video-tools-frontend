@@ -1,9 +1,10 @@
 import { useSession, signIn } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function UploadPage() {
+  const router = useRouter()
   const { data: session, status } = useSession();
   const [file, setFile] = useState(null);
   const [duration, setDuration] = useState(0);
@@ -89,6 +90,8 @@ export default function UploadPage() {
 
       const { uploadUrl, video_id } = presignData;
 
+      console.log("presignData", uploadUrl);
+
       const uploadRes = await fetch(uploadUrl, {
         method: "PUT",
         body: file,
@@ -103,11 +106,11 @@ export default function UploadPage() {
         throw new Error("Falha ao enviar o arquivo para o S3");
       }
 
-      alert("Upload successful!");
+
       setFile(null);
       setDuration(0);
 
-      redirect(`video/${video_id}`);
+      router.push(`video/${video_id}`);
     } catch (err) {
       console.error("Upload error:", err);
       alert(err.message);
