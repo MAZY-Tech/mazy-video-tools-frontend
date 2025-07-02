@@ -27,7 +27,7 @@ export default function VideoDetailPage() {
 
       const apiBase = `${backendUrl ? backendUrl.replace(/\/$/, "") : ""}/api`;
 
-      const videoResp = await fetch(`${apiBase}/video/${video_id}`, {
+      const videoResp = await fetch(`${apiBase}/videos/${video_id}`, {
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
         },
