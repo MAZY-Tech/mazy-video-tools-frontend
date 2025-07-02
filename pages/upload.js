@@ -9,6 +9,7 @@ export default function UploadPage() {
   const [file, setFile] = useState(null);
   const [duration, setDuration] = useState(0);
   const [backendUrl, setBackendUrl] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   if (status === "loading") return (
     <div style={{ 
@@ -39,7 +40,7 @@ export default function UploadPage() {
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
     return hashHex;
   }
-  
+
   const handleFile = (e) => {
     const f = e.target.files?.[0];
     if (!f) return;
@@ -58,6 +59,7 @@ export default function UploadPage() {
   const handleUpload = async () => {
     if (!file) return;
 
+    setLoading(true);
     const apiBase = `${backendUrl}/api`;
 
     try {
@@ -114,6 +116,8 @@ export default function UploadPage() {
     } catch (err) {
       console.error("Upload error:", err);
       alert(err.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -219,20 +223,20 @@ export default function UploadPage() {
 
           <button 
             onClick={handleUpload} 
-            disabled={!file}
+            disabled={!file || loading}
             style={{
               padding: "0.75rem 1.5rem",
-              backgroundColor: file ? "#4285F4" : "#cccccc",
+              backgroundColor: (file && !loading) ? "#4285F4" : "#cccccc",
               color: "white",
               border: "none",
               borderRadius: "4px",
               fontSize: "1rem",
-              cursor: file ? "pointer" : "not-allowed",
+              cursor: (file && !loading) ? "pointer" : "not-allowed",
               fontWeight: "bold",
               marginTop: "1rem"
             }}
           >
-            {file ? "Upload Video" : "Select a file first"}
+            {!file ? "Select a file first" : loading ? "Loading..." : "Upload Video"}
           </button>
         </div>
       </main>
