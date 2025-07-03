@@ -1,5 +1,6 @@
 node_modules
 target
+coverage
 dist
 logs
 public
@@ -11,3 +12,4 @@ public
 yarn-error.log
 npm-debug.log
 .env
+.output.txt
