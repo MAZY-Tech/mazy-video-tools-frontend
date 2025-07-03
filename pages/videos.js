@@ -9,6 +9,11 @@ export default function VideosPage() {
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
+  const handleClick = (e, video) => {
+    e.stopPropagation();
+    router.push(`/video/${video.video_id}`);
+  };
+
   useEffect(() => {
     if (status !== "authenticated") return;
 
@@ -118,7 +123,7 @@ export default function VideosPage() {
             <div style={{ marginBottom: "2rem" }}>
               <h2 style={{ color: "#333" }}>Your Video Collection</h2>
               <p style={{ color: "#666" }}>
-                Browse through all your uploaded videos.
+                Browse through all your uploaded videos and download ZIP files with video frames.
               </p>
             </div>
 
@@ -142,7 +147,7 @@ export default function VideosPage() {
                     <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Name</th>
                     <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Status</th>
                     <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Progress</th>
-                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Download URL</th>
+                    <th style={{ padding: "1rem", fontWeight: "600", color: "#333" }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -166,7 +171,26 @@ export default function VideosPage() {
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap"
                       }}>
-                        {video.file_name}
+                        <span
+                          onClick={(e) => handleClick(e, video)}
+                          style={{
+                            color: "#555",
+                            cursor: "pointer",
+                            fontWeight: 500,
+                            fontSize: "14px",
+                            transition: "color 0.2s ease-in-out"
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.color = "#333";
+                            e.currentTarget.style.textDecoration = "underline";
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.color = "#555";
+                            e.currentTarget.style.textDecoration = "none";
+                          }}
+                        >
+                          {video.file_name}
+                        </span>
                       </td>
                       <td style={{ 
                         padding: "1rem", 
@@ -218,17 +242,26 @@ export default function VideosPage() {
                         whiteSpace: "nowrap"
                       }}>
                         {video.download_url ? (
-                          <a 
-                            href={video.download_url} 
-                            target="_blank" 
+                          <a
+                            href={video.download_url}
+                            target="_blank"
                             rel="noopener noreferrer"
-                            style={{ color: "#4285F4", textDecoration: "none" }}
                             onClick={(e) => e.stopPropagation()}
+                            style={{
+                              display: "inline-block",
+                              padding: "6px 12px",
+                              backgroundColor: "#4285F4",
+                              color: "#fff",
+                              borderRadius: "4px",
+                              textDecoration: "none",
+                              fontSize: "14px",
+                              fontWeight: "bold"
+                            }}
                           >
-                            {video.download_url}
+                            Download ZIP
                           </a>
                         ) : (
-                          "Not available"
+                          <span style={{ color: "#9E9E9E", fontStyle: "italic" }}>Not available</span>
                         )}
                       </td>
                     </tr>
