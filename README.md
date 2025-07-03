@@ -1,11 +1,6 @@
 # mazy-video-tools-frontend
 
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Food-Tech-Challenge_mazyfood-payment&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Food-Tech-Challenge_mazyfood-payment)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Food-Tech-Challenge_mazyfood-payment&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=Food-Tech-Challenge_mazyfood-payment)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Food-Tech-Challenge_mazyfood-payment&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=Food-Tech-Challenge_mazyfood-payment)
-
-
-Tech Challenge Fast Food desenvolvido no curso de Pós-Graduação em Arquitetura de Software na Pós-Tech FIAP.
+Projeto de ferramentas de processamento de vídeo desenvolvido no curso de Pós-Graduação em Arquitetura de Software na Pós-Tech FIAP. Frontend construído com Next.js.
 
 ---
 
@@ -22,11 +17,7 @@ Tech Challenge Fast Food desenvolvido no curso de Pós-Graduação em Arquitetur
 
 ## Sobre o Projeto
 
-O **MAZYFood Payment** é um microsserviço desenvolvido em **Spring Boot**, seguindo o padrão de **Layered Architecture**
-.Além da API em Spring Boot, o projeto utiliza o banco de dados
-**MongoDB** e filas **SQS**. Este projeto tem como objetivo oferecer uma base sólida para estudos e aplicação prática
-de conceitos
-avançados em arquitetura de software com foco em microsserviços.
+O **mazy-video-tools-frontend** é uma aplicação web desenvolvida em **Next.js**, um framework React para renderização do lado do servidor (SSR) e geração de sites estáticos (SSG). Este projeto tem como objetivo oferecer uma interface de usuário moderna e responsiva para a ferramenta de processamento de vídeos, proporcionando uma experiência fluida e intuitiva para os usuários.
 
 ---
 
@@ -46,13 +37,12 @@ avançados em arquitetura de software com foco em microsserviços.
 
 ## Tecnologias Utilizadas
 
-- **Java** (Spring Boot): Framework para construção de aplicações robustas e escaláveis.
+- **Next.js**: Framework React para renderização do lado do servidor (SSR) e geração de sites estáticos (SSG).
+- **React**: Biblioteca JavaScript para construção de interfaces de usuário.
+- **Next Auth**: Solução de autenticação para aplicações Next.js.
+- **Jest & Testing Library**: Ferramentas para testes unitários e de integração.
 - **Docker**: Ferramenta de containerização para garantir a portabilidade e consistência do ambiente.
-- **MongoDB**: Banco de dados NoSQL utilizado para persistência de dados.
-- **SQS**: Serviço de fila da AWS utilizado para desacoplamento entre componentes da aplicação, garantindo comunicação
-  assíncrona, escalabilidade e maior resiliência no processamento de mensagens.
-- **Layered Architecture**: Padrão arquitetural utilizado em aplicações Spring Boot.
-- **Helm**: Gerenciador de pacotes para Kubernetes.
+- **CI/CD**: Integração e entrega contínua para automação do processo de desenvolvimento.
 
 ---
 
@@ -60,16 +50,72 @@ avançados em arquitetura de software com foco em microsserviços.
 
 Antes de começar, certifique-se de ter as seguintes ferramentas instaladas em seu ambiente:
 
-- **Docker**: Para construir as imagens da aplicação.
+- **Node.js**: Versão 16.x ou superior.
+- **npm** ou **yarn**: Gerenciador de pacotes para instalar as dependências.
 - **Git**: Para clonar o repositório.
-- **Kubectl**: Para gerenciar os recursos do cluster Kubernetes.
-- **Helm**: Para gerenciar os pacotes Kubernetes.
-- **Localstack**: Ambiente local que simula serviços da AWS, permitindo o desenvolvimento e testes de integrações com
-  recursos como SQS, S3 e outros, sem necessidade de acesso à nuvem real.
+- **Docker**: Para construir as imagens da aplicação (opcional para desenvolvimento local).
 
 ---
 
 ## Como Executar Localmente
+
+### Desenvolvimento Local
+
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/mazy-video-tools-frontend.git
+   cd mazy-video-tools-frontend
+   ```
+
+2. Instale as dependências:
+   ```bash
+   npm install
+   # ou
+   yarn
+   ```
+
+3. Configure as variáveis de ambiente:
+   - Copie o arquivo `.env.example` para `.env.local`
+   - Ajuste as variáveis conforme necessário
+
+4. Execute o servidor de desenvolvimento:
+   ```bash
+   npm run dev
+   # ou
+   yarn dev
+   ```
+
+5. Acesse a aplicação em `http://localhost:3000`
+
+### Usando Docker
+
+1. Construa a imagem Docker:
+   ```bash
+   docker build -t mazy-video-tools-frontend .
+   ```
+
+2. Execute o container:
+   ```bash
+   docker run -p 3000:3000 mazy-video-tools-frontend
+   ```
+
+3. Acesse a aplicação em `http://localhost:3000`
+
+### Testes
+
+Para executar os testes:
+```bash
+npm test
+# ou
+yarn test
+```
+
+Para executar os testes em modo de observação:
+```bash
+npm run test:watch
+# ou
+yarn test:watch
+```
 
 
 
