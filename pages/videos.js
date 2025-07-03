@@ -170,7 +170,14 @@ export default function VideosPage() {
                       </td>
                       <td style={{ 
                         padding: "1rem", 
-                        color: video.status === "COMPLETED" ? "#34A853" : "#FBBC05",
+                        color:
+                          video.status === "COMPLETED"
+                            ? "#34A853"
+                            : video.status === "RUNNING"
+                            ? "#4285F4"
+                            : video.status === "FAILED"
+                            ? "#EA4335"
+                            : "#2E2E2E",
                         fontWeight: "500"
                       }}>
                         {video.status}
@@ -182,15 +189,24 @@ export default function VideosPage() {
                           borderRadius: "4px",
                           overflow: "hidden"
                         }}>
-                          <div style={{ 
-                            height: "8px", 
-                            width: `${video.progress}%`, 
-                            backgroundColor: video.status === "COMPLETED" ? "#34A853" : "#FBBC05",
-                            borderRadius: "4px"
-                          }}></div>
+                      <div
+                        style={{
+                          height: "8px",
+                          width: `${video.progress ?? 0}%`,
+                          backgroundColor: 
+                            video.status === "COMPLETED"
+                              ? "#34A853"
+                              : video.status === "RUNNING"
+                              ? "#4285F4"
+                              : video.status === "FAILED"
+                              ? "#EA4335"
+                              : "#9E9E9E",
+                          borderRadius: "4px"
+                        }}
+                      ></div>
                         </div>
                         <span style={{ fontSize: "0.8rem", marginTop: "0.25rem", display: "inline-block" }}>
-                          {video.progress}%
+                          {video.progress ?? 0}%
                         </span>
                       </td>
                       <td style={{ 
