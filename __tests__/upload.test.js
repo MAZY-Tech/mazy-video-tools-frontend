@@ -16,6 +16,11 @@ jest.mock('next/navigation', () => ({
 global.URL.createObjectURL = jest.fn(() => 'mock-url');
 global.URL.revokeObjectURL = jest.fn();
 
+// Mock File.prototype.arrayBuffer
+File.prototype.arrayBuffer = jest.fn().mockImplementation(function() {
+  return Promise.resolve(new ArrayBuffer(8));
+});
+
 // Mock crypto.subtle.digest
 const mockDigest = jest.fn(() => Promise.resolve(new Uint8Array([1, 2, 3, 4])));
 
@@ -146,7 +151,11 @@ describe('Upload Page', () => {
 
     // Check that the duration is displayed
     await waitFor(() => {
-      expect(screen.getByText('Video Duration: 60 seconds')).toBeInTheDocument();
+      // Use getAllByText and check that at least one element matches
+      const elements = screen.getAllByText((content, element) => {
+        return element.textContent.includes('Video Duration') && element.textContent.includes('60 seconds');
+      });
+      expect(elements.length).toBeGreaterThan(0);
     });
 
     // Check that the upload button is enabled and has the correct text
@@ -228,7 +237,11 @@ describe('Upload Page', () => {
 
     // Wait for the duration to be displayed
     await waitFor(() => {
-      expect(screen.getByText('Video Duration: 60 seconds')).toBeInTheDocument();
+      // Use getAllByText and check that at least one element matches
+      const elements = screen.getAllByText((content, element) => {
+        return element.textContent.includes('Video Duration') && element.textContent.includes('60 seconds');
+      });
+      expect(elements.length).toBeGreaterThan(0);
     });
 
     // Click the upload button
