@@ -33,12 +33,10 @@ export default function VideoDetailPage() {
         },
       });
 
-      if (!videoResp.ok) {
-        throw new Error("Failed to fetch video information");
+      if (videoResp.ok) {
+        const videoData = await videoResp.json();
+        setVideo(videoData);
       }
-
-      const videoData = await videoResp.json();
-      setVideo(videoData);
     } catch (error) {
       console.error("Error fetching video:", error);
       setError(error.message);
@@ -212,7 +210,7 @@ export default function VideoDetailPage() {
                 <div style={{ color: "#666" }}>{video.status}</div>
 
                 <div style={{ fontWeight: "bold", color: "#333" }}>Progress:</div>
-                <div style={{ color: "#666" }}>{video.progress}%</div>
+                <div style={{ color: "#666" }}>{video.progress || 0}%</div>
 
                 <div style={{ fontWeight: "bold", color: "#333" }}>Download URL:</div>
                 <div style={{ color: "#666", wordBreak: "break-all" }}>

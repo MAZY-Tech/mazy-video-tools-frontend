@@ -26,7 +26,7 @@ export default function Home() {
         alignItems: "center", 
         height: "100vh" 
       }}>
-        <h1 style={{ marginBottom: "2rem", color: "#333" }}>Mazy Video Tools</h1>
+        <h1 style={{ marginBottom: "2rem", color: "#333" }}>MAZY Video Tools</h1>
         <a 
           onClick={() => signIn("cognito")} 
           className="nav-link"
@@ -54,7 +54,7 @@ export default function Home() {
         paddingBottom: "1rem",
         borderBottom: "1px solid #eaeaea"
       }}>
-        <h1 style={{ color: "#333", margin: 0 }}>Mazy Video Tools</h1>
+        <h1 style={{ color: "#333", margin: 0 }}>MAZY Video Tools</h1>
         <div>
           <span style={{ marginRight: "1rem" }}>Signed in as {session.user.email}</span>
           <button
@@ -81,7 +81,7 @@ export default function Home() {
           justifyContent: "center",
           padding: "3rem 0"
         }}>
-          <h2 style={{ marginBottom: "2rem", color: "#333" }}>Welcome to Mazy Video Tools</h2>
+          <h2 style={{ marginBottom: "2rem", color: "#333" }}>Welcome to MAZY Video Tools</h2>
           <div style={{ 
             display: "flex", 
             gap: "1rem" 

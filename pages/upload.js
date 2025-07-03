@@ -85,34 +85,33 @@ export default function UploadPage() {
           "x-amz-meta-video_hash": videoHash,
         }),
       });
+
       const presignData = await presignRes.json();
       if (!presignRes.ok) {
         throw new Error(presignData.error || "Erro ao obter URL de upload");
       }
 
-      const { uploadUrl, video_id } = presignData;
-
-      console.log("presignData", uploadUrl);
+      const { uploadUrl, videoId } = presignData;
 
       const uploadRes = await fetch(uploadUrl, {
         method: "PUT",
         body: file,
         headers: {
           "Content-Type": file.type,
-          "x-amz-meta-video_id" : video_id,
+          "x-amz-meta-video_id" : videoId,
           "x-amz-meta-video_hash": videoHash,
           "x-amz-meta-cognito_user_id": userId,
         },
       });
+
       if (!uploadRes.ok) {
         throw new Error("Falha ao enviar o arquivo para o S3");
       }
 
-
       setFile(null);
       setDuration(0);
 
-      router.push(`video/${video_id}`);
+      router.push(`video/${videoId}`);
     } catch (err) {
       console.error("Upload error:", err);
       alert(err.message);
