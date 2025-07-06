@@ -8,7 +8,7 @@ export default function UploadPage() {
   const { data: session, status } = useSession();
   const [file, setFile] = useState(null);
   const [duration, setDuration] = useState(0);
-  const [backendUrl, setBackendUrl] = useState(null);
+  const [apiUrl, setApiUrl] = useState(null);
   const [loading, setLoading] = useState(false);
 
   if (status === "loading") return (
@@ -28,8 +28,8 @@ export default function UploadPage() {
   useEffect(() => {
     (async () => {
       const resp = await fetch("/api/config");
-      const { backendUrl } = await resp.json();
-      setBackendUrl(backendUrl.replace(/\/$/, ""));
+      const { apiUrl } = await resp.json();
+      setApiUrl(apiUrl.replace(/\/$/, ""));
     })();
   }, []);
 
@@ -60,7 +60,7 @@ export default function UploadPage() {
     if (!file) return;
 
     setLoading(true);
-    const apiBase = `${backendUrl}/api`;
+    const apiBase = `${apiUrl}/api`;
 
     try {
       const { name, size } = file;

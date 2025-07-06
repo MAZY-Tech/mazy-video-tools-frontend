@@ -8,7 +8,7 @@ export default function VideoDetailPage() {
   const [video, setVideo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [backendUrl, setBackendUrl] = useState(null);
+  const [apiUrl, setApiUrl] = useState(null);
   const router = useRouter();
   const { video_id } = router.query;
   const intervalRef = useRef(null);
@@ -18,14 +18,14 @@ export default function VideoDetailPage() {
     if (status !== "authenticated" || !video_id) return;
 
     try {
-      // Only fetch config if we don't have backendUrl yet
-      if (!backendUrl) {
+      // Only fetch config if we don't have apiUrl yet
+      if (!apiUrl) {
         const resp = await fetch("/api/config");
         const config = await resp.json();
-        setBackendUrl(config.backendUrl);
+        setApiUrl(config.apiUrl);
       }
 
-      const apiBase = `${backendUrl ? backendUrl.replace(/\/$/, "") : ""}/api`;
+      const apiBase = `${apiUrl ? apiUrl.replace(/\/$/, "") : ""}/api`;
 
       const videoResp = await fetch(`${apiBase}/videos/${video_id}`, {
         headers: {
@@ -43,7 +43,7 @@ export default function VideoDetailPage() {
     } finally {
       setLoading(false);
     }
-  }, [status, session, video_id, backendUrl]);
+  }, [status, session, video_id, apiUrl]);
 
   // Initial fetch when component mounts
   useEffect(() => {
