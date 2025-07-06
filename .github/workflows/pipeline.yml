@@ -48,8 +48,7 @@ jobs:
 
   build-and-push:
     needs:
-    - unit-test
-    - sonar-quality
+    - test-and-analyze
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' || github.event.name == 'workflow_dispatch' }}
 
