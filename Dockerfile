@@ -1,10 +1,10 @@
 FROM node:18-alpine AS builder
 WORKDIR /app
 
-COPY src/package*.json ./
+COPY package*.json ./
 RUN npm ci
 
-COPY src/ .
+COPY . .
 RUN npm run build && mkdir -p /app/public
 
 # ----------------------------------------------------------------
