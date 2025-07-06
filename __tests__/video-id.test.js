@@ -31,7 +31,7 @@ describe('Video Detail Page', () => {
       if (url.includes('/api/config')) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({ backendUrl: 'http://localhost:8000' }),
+          json: () => Promise.resolve({ apiUrl: 'http://localhost:8000' }),
         });
       }
       return Promise.resolve({
@@ -87,7 +87,7 @@ describe('Video Detail Page', () => {
           if (url.includes('/api/config')) {
             resolve({
               ok: true,
-              json: () => Promise.resolve({ backendUrl: 'http://localhost:8000' }),
+              json: () => Promise.resolve({ apiUrl: 'http://localhost:8000' }),
             });
           } else {
             resolve({
@@ -120,7 +120,7 @@ describe('Video Detail Page', () => {
       if (url.includes('/api/config')) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({ backendUrl: 'http://localhost:8000' }),
+          json: () => Promise.resolve({ apiUrl: 'http://localhost:8000' }),
         });
       }
       if (url.includes('/api/videos/')) {
@@ -164,7 +164,7 @@ describe('Video Detail Page', () => {
       if (url.includes('/api/config')) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({ backendUrl: 'http://localhost:8000' }),
+          json: () => Promise.resolve({ apiUrl: 'http://localhost:8000' }),
         });
       }
       if (url.includes('/api/videos/')) {
@@ -210,7 +210,7 @@ describe('Video Detail Page', () => {
       if (url.includes('/api/config')) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({ backendUrl: 'http://localhost:8000' }),
+          json: () => Promise.resolve({ apiUrl: 'http://localhost:8000' }),
         });
       }
       if (url.includes('/api/videos/')) {
@@ -272,7 +272,7 @@ describe('Video Detail Page', () => {
       if (url.includes('/api/config')) {
         return Promise.resolve({
           ok: true,
-          json: () => Promise.resolve({ backendUrl: 'http://localhost:8000' }),
+          json: () => Promise.resolve({ apiUrl: 'http://localhost:8000' }),
         });
       }
       if (url.includes('/api/videos/')) {

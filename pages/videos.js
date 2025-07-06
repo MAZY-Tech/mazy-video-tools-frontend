@@ -20,8 +20,8 @@ export default function VideosPage() {
     (async () => {
       try {
         const resp = await fetch("/api/config");
-        const { backendUrl } = await resp.json();
-        const apiBase = `${backendUrl.replace(/\/$/, "")}/api`;
+        const { apiUrl } = await resp.json();
+        const apiBase = `${apiUrl.replace(/\/$/, "")}/api`;
 
         const videosResp = await fetch(`${apiBase}/videos`, {
           headers: {
