@@ -1,5 +1,10 @@
 # mazy-video-tools-frontend
 
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=MAZY-Tech_mazy-video-tools-frontend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=MAZY-Tech_mazy-video-tools-frontend)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=MAZY-Tech_mazy-video-tools-frontend&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=MAZY-Tech_mazy-video-tools-frontend)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MAZY-Tech_mazy-video-tools-frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=MAZY-Tech_mazy-video-tools-frontend)
+
+
 Projeto de ferramentas de processamento de vídeo desenvolvido no curso de Pós-Graduação em Arquitetura de Software na Pós-Tech FIAP. Frontend construído com Next.js.
 
 ---
